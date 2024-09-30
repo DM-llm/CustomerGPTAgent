@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CustomerGptAgentApplication {
+public class CustomerGPTAgentApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CustomerGptAgentApplication.class, args);
+		SpringApplication.run(CustomerGPTAgentApplication.class, args);
 	}
-
 }
