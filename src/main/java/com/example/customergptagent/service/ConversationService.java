@@ -23,7 +23,7 @@ public class ConversationService {
         // 从 PromptRepository 中随机选择一个客户智能体的 prompt
         String randomPrompt = promptRepository.getRandomPromptForCustomerAgent();
 
-        // 假设从数据库中获取商品信息（具体逻辑待数据库设计完毕后实现）
+        // 假设从数据库中获取商品信息
         String productInfo = "Sample product info";
 
         // 组合 prompt 和商品信息，发起 GPT 请求

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.customergptagent.repository.PromptRepository">
+
+    <!-- 根据ID查询Prompt -->
+    <select id="getPromptById" resultType="com.example.customergptagent.model.AgentPrompt">
+        SELECT id, type, content
+        FROM prompts
+        WHERE id = #{id}
+    </select>
+
+    <!-- 获取所有Prompts -->
+    <select id="getAllPrompts" resultType="com.example.customergptagent.model.AgentPrompt">
+        SELECT id, type, content
+        FROM prompts
+    </select>
+
+    <!-- 根据类型获取Prompts -->
+    <select id="getPromptsByType" resultType="com.example.customergptagent.model.AgentPrompt">
+        SELECT id, type, content
+        FROM prompts
+        WHERE type = #{type}
+    </select>
+
+</mapper>
