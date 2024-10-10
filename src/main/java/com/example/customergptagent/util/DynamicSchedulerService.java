@@ -2,10 +2,8 @@ package com.example.customergptagent.util;
 
 import com.example.customergptagent.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.ScheduledFuture;
 
 @Service
 public class DynamicSchedulerService {
@@ -13,32 +11,16 @@ public class DynamicSchedulerService {
     @Autowired
     private ConversationService conversationService;
 
-    private final ThreadPoolTaskScheduler taskScheduler;
-    private ScheduledFuture<?> futureTask;
-
-    public DynamicSchedulerService() {
-        this.taskScheduler = new ThreadPoolTaskScheduler();
-        this.taskScheduler.initialize();
+    // 手动触发方法
+    public void triggerManually() {
+        // 调用对话服务开始执行定时任务的逻辑
+        conversationService.startConversation();
     }
 
-    // 启动定时任务
-    public void startScheduledTask(long delay) {
-        stopScheduledTask(); // 先停止之前的任务
-        futureTask = taskScheduler.scheduleWithFixedDelay(
-                this::triggerConversation,
-                delay
-        );
-    }
-
-    // 停止定时任务
-    public void stopScheduledTask() {
-        if (futureTask != null && !futureTask.isCancelled()) {
-            futureTask.cancel(true);
-        }
-    }
-
-    // 触发对话
-    private void triggerConversation() {
-        conversationService.triggerConversation();
+    // 每天早上10点触发任务
+    @Scheduled(cron = "0 0 10 * * ?")
+    public void triggerScheduledTask() {
+        // 定时自动触发任务
+        conversationService.startConversation();
     }
 }

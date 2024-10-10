@@ -2,25 +2,25 @@ package com.example.customergptagent.model;
 
 public class AgentPrompt {
 
-    private int id;
-    private String type;     // 客户或评论类型
-    private String content;  // prompt具体内容
+    private Long id;         // Prompt 的唯一标识符
+    private String type;     // Prompt 的类型，例如 "customer" 或 "review"
+    private String promptText;  // Prompt 的具体内容（存放 prompt 的文本）
 
-    // 构造函数、getter 和 setter
-
+    // 构造函数
     public AgentPrompt() {}
 
-    public AgentPrompt(int id, String type, String content) {
+    public AgentPrompt(Long id, String type, String promptText) {
         this.id = id;
         this.type = type;
-        this.content = content;
+        this.promptText = promptText;
     }
 
-    public int getId() {
+    // Getter 和 Setter 方法
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -32,12 +32,12 @@ public class AgentPrompt {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getPromptText() {
+        return promptText;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPromptText(String promptText) {
+        this.promptText = promptText;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AgentPrompt {
         return "AgentPrompt{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
+                ", promptText='" + promptText + '\'' +
                 '}';
     }
 }
