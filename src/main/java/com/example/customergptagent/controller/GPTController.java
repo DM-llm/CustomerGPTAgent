@@ -2,7 +2,6 @@ package com.example.customergptagent.controller;
 
 import com.example.customergptagent.factory.AIModelFactory;
 import com.example.customergptagent.memory.InMemoryConversationStore;
-import com.example.customergptagent.service.AIModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
