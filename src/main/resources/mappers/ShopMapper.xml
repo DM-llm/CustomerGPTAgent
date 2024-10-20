@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.customergptagent.mapper.ShopMapper">
+
+    <!-- 查询每周店铺数据 -->
+    <select id="findWeeklyShopData" resultType="com.example.customergptagent.model.BusShop">
+        SELECT id, gptqty, vipgptqty, orderqty
+        FROM bus_shop
+    </select>
+
+    <!-- 插入每周任务日志到冗余表 -->
+    <insert id="insertWeeklyTaskLog">
+        INSERT INTO bus_shop_weekly_task_log (shop_id, week_number, gptqty, vipgptqty, orderqty)
+        VALUES (#{shopId}, #{weekNumber}, #{gptqty}, #{vipgptqty}, #{orderqty})
+    </insert>
+
+    <!-- 检查是否有字段未达标 -->
+    <select id="checkThresholdMet" resultType="int">
+        SELECT COUNT(1)
+        FROM bus_shop_weekly_task_log
+        WHERE shop_id = #{shopId}
+        AND (gptqty < #{gptqtyThreshold} OR vipgptqty < #{vipgptqtyThreshold} OR orderqty < #{orderqtyThreshold})
+    </select>
+
+    <!-- 更新浏览次数 -->
+    <update id="updateBrowseCount">
+        UPDATE bus_shop_product_spu
+        SET browse_count = browse_count + 1
+        WHERE shop_id = #{shopId}
+    </update>
+
+    <!-- 更新任务完成状态 -->
+    <update id="updateTaskCompleteStatus">
+        UPDATE bus_shop_weekly_task_log
+        SET task_complete = 1
+        WHERE shop_id = #{shopId} AND week_number = #{weekNumber}
+    </update>
+
+</mapper>
