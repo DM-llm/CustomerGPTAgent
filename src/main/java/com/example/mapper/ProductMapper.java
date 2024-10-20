@@ -1,7 +1,7 @@
-package com.example.customergptagent.mapper;
+package com.example.mapper;
 
 
-import com.example.customergptagent.domain.Product;
+import com.example.domain.Product;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

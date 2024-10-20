@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.customergptagent.mapper.ShopMapper">
+<mapper namespace="com.example.mapper.ShopMapper">
 
     <!-- 查询每周店铺数据 -->
-    <select id="findWeeklyShopData" resultType="com.example.customergptagent.model.BusShop">
+    <select id="findWeeklyShopData" resultType="com.example.model.BusShop">
         SELECT id, gptqty, vipgptqty, orderqty
         FROM bus_shop
     </select>

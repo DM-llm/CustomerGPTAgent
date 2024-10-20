@@ -1,8 +1,8 @@
-package com.example.customergptagent.service;
+package com.example.service;
 
 
-import com.example.customergptagent.model.BusShop;
-import com.example.customergptagent.mapper.ShopMapper;
+import com.example.model.BusShop;
+import com.example.mapper.ShopMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

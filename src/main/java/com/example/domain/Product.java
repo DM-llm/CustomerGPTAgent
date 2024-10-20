@@ -1,12 +1,13 @@
-package com.example.customergptagent.model;
+package com.example.domain;
 
-public class ProductInfo {
+public class Product {
     private Long id;
     private String name;
     private String introduction;
     private String description;
+    private String spuNo;  // 新增字段封装 spu_no
 
-    // Getter 和 Setter 方法
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -39,13 +40,11 @@ public class ProductInfo {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "ProductInfo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", introduction='" + introduction + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public String getSpuNo() {
+        return spuNo;
+    }
+
+    public void setSpuNo(String spuNo) {
+        this.spuNo = spuNo;
     }
 }

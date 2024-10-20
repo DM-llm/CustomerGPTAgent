@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.PromptMapper">
+
+    <!-- 查询 customer_agent 类型的随机 prompt -->
+    <select id="selectCustomerAgentPrompt" resultType="String">
+        SELECT prompt_text
+        FROM agent_prompts
+        WHERE prompt_type = 'customer_agent'
+        ORDER BY RAND()
+        LIMIT 1
+    </select>
+
+</mapper>

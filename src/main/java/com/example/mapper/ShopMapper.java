@@ -1,7 +1,7 @@
-package com.example.customergptagent.mapper;
+package com.example.mapper;
 
 
-import com.example.customergptagent.model.BusShop;
+import com.example.model.BusShop;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

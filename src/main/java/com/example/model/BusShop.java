@@ -1,4 +1,4 @@
-package com.example.customergptagent.model;
+package com.example.model;
 
 
 public class BusShop {
