@@ -21,6 +21,9 @@ public class GPTConversationService {
     // 用来保存整个对话的上下文（系统消息、GPT回复、用户输入）
     private List<Map<String, String>> conversationHistory = new ArrayList<>();
 
+    // 商品详情
+    private String productDetails; // 商品详情字段
+
     // 最大对话轮数
     private static final int MAX_ROUNDS = 5;
 
@@ -30,8 +33,13 @@ public class GPTConversationService {
         String prompt = promptService.getCustomerAgentPrompt();
         System.out.println(prompt);
 
-        // 首次仅发送 prompt 给 GPT
+        // 获取商品详情
+        productDetails = getProductDetails();
+        System.out.println("商品详情: " + productDetails);
+
+        // 首次发送 prompt 和商品详情
         conversationHistory.add(Map.of("role", "system", "content", prompt));
+        conversationHistory.add(Map.of("role", "system", "content", "Product Details: " + productDetails));
 
         // 调用 GPT API 获取首次回复
         String gptResponse = sendRequestToGPT();
@@ -65,6 +73,12 @@ public class GPTConversationService {
         conversationHistory.add(Map.of("role", "assistant", "content", gptResponse));
 
         return gptResponse;
+    }
+
+    // 获取商品详情，实际逻辑已由你实现
+    private String getProductDetails() {
+        // 这里调用商品查询部分的代码
+        return "Product XYZ details..."; // 假设商品详情已经获取
     }
 
     // 从控制台获取最新的聊天输入

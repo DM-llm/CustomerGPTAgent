@@ -14,4 +14,8 @@ public class PromptService {
     public String getCustomerAgentPrompt() {
         return promptMapper.selectCustomerAgentPrompt();
     }
+    // 查询 product_review_agent 类型的 prompt
+    public String selectProductReviewAgentPrompt() {
+        return promptMapper.selectProductReviewAgentPrompt();
+    }
 }

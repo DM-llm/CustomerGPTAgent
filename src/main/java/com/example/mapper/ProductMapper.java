@@ -1,6 +1,4 @@
 package com.example.mapper;
-
-
 import com.example.domain.Product;
 import org.apache.ibatis.annotations.Mapper;
 

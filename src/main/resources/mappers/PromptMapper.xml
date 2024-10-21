@@ -14,4 +14,14 @@
         LIMIT 1
     </select>
 
+    <!-- 查询 product_review_agent 类型的随机 prompt -->
+    <select id="selectProductReviewAgentPrompt" resultType="String">
+        SELECT prompt_text
+        FROM agent_prompts
+        WHERE prompt_type = 'product_review_agent'
+        ORDER BY RAND()
+        LIMIT 1
+    </select>
+
+
 </mapper>

@@ -15,7 +15,7 @@ public class OrderService {
     @Autowired
     private ProductMapper productMapper;
 
-    // 自动下单逻辑
+    // 查询商品信息
     public void autoPlaceOrder() {
         // 获取 optype = 1 的 spu_no 列表
         List<String> spuNos = productMapper.selectAutoPurchaseSpuNos();
