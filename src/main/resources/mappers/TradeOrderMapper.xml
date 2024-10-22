@@ -12,11 +12,12 @@
     </select>
 
     <!-- 根据订单编号查询 spu_id -->
-    <select id="selectSpuIdByOrderNo" resultType="Long">
+    <select id="selectSpuIdByOrderNo" resultType="java.lang.Long">
         SELECT toi.spu_id
         FROM trade_order_item toi
-                 INNER JOIN trade_order to ON toi.order_id = to.id
-        WHERE to.no = #{orderNo}
+                 INNER JOIN trade_order t_order ON toi.order_id = t_order.id
+        WHERE t_order.no = #{orderNo}
     </select>
+
 
 </mapper>
