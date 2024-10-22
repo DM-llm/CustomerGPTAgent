@@ -14,10 +14,11 @@
     </select>
 
     <!-- 根据 spu_no 查询商品信息 -->
-    <select id="selectProductBySpuNo" resultType="com.example.domain.Product">
+    <select id="selectProductBySpuNo" resultType="com.example.model.Product">
         SELECT id, name, introduction, description
         FROM product_spu
         WHERE id = #{spuNo}
     </select>
 
 </mapper>
+

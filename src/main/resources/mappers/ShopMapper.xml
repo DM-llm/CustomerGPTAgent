@@ -22,8 +22,11 @@
         SELECT COUNT(1)
         FROM bus_shop_weekly_task_log
         WHERE shop_id = #{shopId}
-        AND (gptqty < #{gptqtyThreshold} OR vipgptqty < #{vipgptqtyThreshold} OR orderqty < #{orderqtyThreshold})
+          AND (gptqty &lt; #{gptqtyThreshold}
+            OR vipgptqty &lt; #{vipgptqtyThreshold}
+            OR orderqty &lt; #{orderqtyThreshold})
     </select>
+
 
     <!-- 更新浏览次数 -->
     <update id="updateBrowseCount">

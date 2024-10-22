@@ -1,4 +1,4 @@
-package com.example.domain;
+package com.example.model;
 
 public class Product {
     private Long id;

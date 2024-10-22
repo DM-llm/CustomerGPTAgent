@@ -1,7 +1,6 @@
 package com.example.service;
 
-
-import com.example.domain.Product;
+import com.example.model.Product;
 import com.example.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ public class OrderService {
     @Autowired
     private ProductMapper productMapper;
 
-    // 查询商品信息
+    // 自动下单逻辑
     public void autoPlaceOrder() {
         // 获取 optype = 1 的 spu_no 列表
         List<String> spuNos = productMapper.selectAutoPurchaseSpuNos();

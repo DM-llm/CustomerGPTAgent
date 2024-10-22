@@ -1,5 +1,5 @@
 package com.example.mapper;
-import com.example.domain.Product;
+import com.example.model.Product;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
