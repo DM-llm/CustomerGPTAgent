@@ -14,12 +14,11 @@ public class OrderService {
     @Autowired
     private ProductMapper productMapper;
 
-    // 自动下单逻辑
-    public void autoPlaceOrder() {
+    // 自动下单逻辑，并返回下单的商品信息
+    public Product autoPlaceOrder() {
         // 获取 optype = 1 的 spu_no 列表
         List<String> spuNos = productMapper.selectAutoPurchaseSpuNos();
 
-        // 如果找到 spu_no 列表
         if (spuNos != null && !spuNos.isEmpty()) {
             // 随机选择一个 spu_no
             Random random = new Random();
@@ -28,27 +27,28 @@ public class OrderService {
             // 根据 spu_no 查询商品信息
             Product product = productMapper.selectProductBySpuNo(selectedSpuNo);
 
-            // 打印查询结果或执行后续逻辑
             if (product != null) {
                 System.out.println("商品ID: " + product.getId());
                 System.out.println("商品名称: " + product.getName());
                 System.out.println("商品简介: " + product.getIntroduction());
                 System.out.println("商品详情: " + product.getDescription());
 
-                // 执行下单逻辑
-                placeOrder(product);
+                // 执行下单逻辑并返回商品信息
+                return placeOrder(product);
             } else {
                 System.out.println("未找到商品信息。");
+                return null;
             }
         } else {
             System.out.println("未找到符合条件的 spu_no。");
+            return null;
         }
     }
 
     // 示例下单操作逻辑
-    private void placeOrder(Product product) {
+    private Product placeOrder(Product product) {
         // 在此处执行实际的下单操作逻辑
         System.out.println("为商品 " + product.getName() + " 自动下单。");
-        // ... 后续处理
+        return product; // 返回下单的商品信息
     }
 }

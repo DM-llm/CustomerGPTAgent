@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class GPTConversationService {
 
     @Autowired
     private GPTRequestService gptRequestService;
+
+    @Autowired
+    private OrderService orderService;
 
     // 用来保存整个对话的上下文（系统消息、GPT回复、用户输入）
     private List<Map<String, String>> conversationHistory = new ArrayList<>();
@@ -57,6 +61,8 @@ public class GPTConversationService {
         }
 
         System.out.println("对话结束。");
+
+
     }
 
     // 调用 GPT API 并返回 GPT 的回复
@@ -75,13 +81,20 @@ public class GPTConversationService {
         return gptResponse;
     }
 
-    // 获取商品详情，实际逻辑已由你实现
-    private String getProductDetails() {
-        // 这里调用商品查询部分的代码
-        return "Product XYZ details..."; // 假设商品详情已经获取
+    // 获取商品详情
+    public String getProductDetails() {
+        // 从 OrderService 获取已下单的商品信息
+        Product product = orderService.autoPlaceOrder();
+
+        if (product != null) {
+            // 返回商品详情
+            return "Product Name: " + product.getName() + ", Introduction: " + product.getIntroduction() + ", Description: " + product.getDescription();
+        } else {
+            return "No product details found.";
+        }
     }
 
-    // 从控制台获取最新的聊天输入
+    // 商家回复消息接口
     private String getLatestChatInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("请输入聊天信息：");
