@@ -81,7 +81,7 @@ public class GPTAutoCommentService {
         return "Product details for order " + order.getNo(); // 示例返回
     }
 
-    // 模拟将评论发送到评论接口，实际逻辑由你实现
+    // 模拟将评论发送到评论接口，
     private void postComment(String gptResponse, TradeOrder order) {
         // 调用第二个接口，填写评论
         System.out.println("向订单 " + order.getNo() + " 添加评论: " + gptResponse);

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.TradeOrderMapper">
+
+    <!-- 查询 status = 20 的订单编号 -->
+    <select id="selectOrderNosByStatus" resultType="String">
+        SELECT no
+        FROM trade_order
+        WHERE status = 20
+    </select>
+
+    <!-- 根据订单编号查询 spu_id -->
+    <select id="selectSpuIdByOrderNo" resultType="Long">
+        SELECT toi.spu_id
+        FROM trade_order_item toi
+                 INNER JOIN trade_order to ON toi.order_id = to.id
+        WHERE to.no = #{orderNo}
+    </select>
+
+</mapper>
