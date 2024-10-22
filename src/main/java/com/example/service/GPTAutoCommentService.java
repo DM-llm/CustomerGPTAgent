@@ -75,7 +75,7 @@ public class GPTAutoCommentService {
         return gptRequestService.sendRequestToGPT(conversationRequest);
     }
 
-    // 模拟获取商品详情，实际查询逻辑已由你实现
+    // 模拟获取商品详情，实际查询逻辑
     private String getProductDetails(TradeOrder order) {
         // 这里调用商品查询部分的代码
         return "Product details for order " + order.getNo(); // 示例返回
@@ -85,6 +85,6 @@ public class GPTAutoCommentService {
     private void postComment(String gptResponse, TradeOrder order) {
         // 调用第二个接口，填写评论
         System.out.println("向订单 " + order.getNo() + " 添加评论: " + gptResponse);
-        // 实际可以通过 HTTP 调用发送评论信息
+
     }
 }
