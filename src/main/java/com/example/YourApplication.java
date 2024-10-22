@@ -31,12 +31,12 @@ public class YourApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// 查prompt 启动 GPT 对话
-		gptConversationService.handleConversation();
+		//gptConversationService.handleConversation();
 
 		// 查询商品信息 下单
 		//OrderService.autoPlaceOrder();
 
 		// 自动评论
-		//gptAutoCommentService.handleAutoComment();
+		gptAutoCommentService.handleAutoComment();
 	}
 }
