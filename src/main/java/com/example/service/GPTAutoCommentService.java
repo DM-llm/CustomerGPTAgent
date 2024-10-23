@@ -79,7 +79,7 @@ public class GPTAutoCommentService {
     private String getProductDetails(String orderNo) {
         // 根据订单编号查询关联的 spu_id 列表
         List<Long> spuIds = tradeOrderMapper.selectSpuIdByOrderNo(orderNo);
-
+        System.out.println("spuIds:" + spuIds);
         StringBuilder productDetails = new StringBuilder();
 
         // 循环每个 spu_id，并根据 spu_id 查询商品信息
