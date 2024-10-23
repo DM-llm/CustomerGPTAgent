@@ -28,7 +28,7 @@ public class GPTConversationService {
     // 商品详情
     private String productDetails; // 商品详情字段
 
-    // 最大对话轮数
+    // 最大对话轮数，GPT 回复 4 轮，商家回复最后一轮
     private static final int MAX_ROUNDS = 5;
 
     // 处理对话逻辑
@@ -49,8 +49,8 @@ public class GPTConversationService {
         String gptResponse = sendRequestToGPT();
         System.out.println("GPT 回复: " + gptResponse);
 
-        // 开始用户与 GPT 的对话，进行 4 轮用户输入 + GPT 回复
-        for (int round = 1; round < MAX_ROUNDS; round++) {
+        // 开始用户与 GPT 的对话，GPT 回复 4 轮，商家回复最后一轮
+        for (int round = 1; round < MAX_ROUNDS - 1; round++) {
             // 获取用户输入
             String userInput = getLatestChatInput();
             conversationHistory.add(Map.of("role", "user", "content", userInput));
@@ -60,9 +60,12 @@ public class GPTConversationService {
             System.out.println("GPT 回复: " + gptResponse);
         }
 
+        // 最后一轮：商家回复
+        String merchantReply = getLatestChatInput(); // 商家手动输入
+        conversationHistory.add(Map.of("role", "merchant", "content", merchantReply)); // 记录商家回复
+        System.out.println("商家回复: " + merchantReply);
+
         System.out.println("对话结束。");
-
-
     }
 
     // 调用 GPT API 并返回 GPT 的回复
