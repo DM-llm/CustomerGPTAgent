@@ -7,6 +7,7 @@ import com.example.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,10 +68,18 @@ public class GPTAutoCommentService {
     private String sendRequestToGPT(String prompt, String productDetails) {
         Map<String, Object> conversationRequest = new HashMap<>();
         conversationRequest.put("model", "gpt-3.5-turbo");
-        conversationRequest.put("messages", List.of(
-                Map.of("role", "system", "content", prompt),
-                Map.of("role", "system", "content", "Product Details: " + productDetails)
-        ));
+
+        // Instead of Map.of() and List.of(), use HashMap and Arrays.asList
+        Map<String, String> systemMessage1 = new HashMap<>();
+        systemMessage1.put("role", "system");
+        systemMessage1.put("content", prompt);
+
+        Map<String, String> systemMessage2 = new HashMap<>();
+        systemMessage2.put("role", "system");
+        systemMessage2.put("content", "Product Details: " + productDetails);
+
+        // Use Arrays.asList() to create a list of messages
+        conversationRequest.put("messages", Arrays.asList(systemMessage1, systemMessage2));
 
         return gptRequestService.sendRequestToGPT(conversationRequest);
     }

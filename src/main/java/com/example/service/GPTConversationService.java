@@ -42,8 +42,16 @@ public class GPTConversationService {
         System.out.println("商品详情: " + productDetails);
 
         // 首次发送 prompt 和商品详情
-        conversationHistory.add(Map.of("role", "system", "content", prompt));
-        conversationHistory.add(Map.of("role", "system", "content", "Product Details: " + productDetails));
+        Map<String, String> systemMessage1 = new HashMap<>();
+        systemMessage1.put("role", "system");
+        systemMessage1.put("content", prompt);
+
+        Map<String, String> systemMessage2 = new HashMap<>();
+        systemMessage2.put("role", "system");
+        systemMessage2.put("content", "Product Details: " + productDetails);
+
+        conversationHistory.add(systemMessage1);
+        conversationHistory.add(systemMessage2);
 
         // 调用 GPT API 获取首次回复
         String gptResponse = sendRequestToGPT();
@@ -53,7 +61,11 @@ public class GPTConversationService {
         for (int round = 1; round < MAX_ROUNDS - 1; round++) {
             // 获取用户输入
             String userInput = getLatestChatInput();
-            conversationHistory.add(Map.of("role", "user", "content", userInput));
+            Map<String, String> userMessage = new HashMap<>();
+            userMessage.put("role", "user");
+            userMessage.put("content", userInput);
+
+            conversationHistory.add(userMessage);
 
             // 调用 GPT API 获取回复
             gptResponse = sendRequestToGPT();
@@ -62,7 +74,11 @@ public class GPTConversationService {
 
         // 最后一轮：商家回复
         String merchantReply = getLatestChatInput(); // 商家手动输入
-        conversationHistory.add(Map.of("role", "merchant", "content", merchantReply)); // 记录商家回复
+        Map<String, String> merchantMessage = new HashMap<>();
+        merchantMessage.put("role", "merchant");
+        merchantMessage.put("content", merchantReply);
+
+        conversationHistory.add(merchantMessage); // 记录商家回复
         System.out.println("商家回复: " + merchantReply);
 
         System.out.println("对话结束。");
@@ -79,7 +95,11 @@ public class GPTConversationService {
         String gptResponse = gptRequestService.sendRequestToGPT(conversationRequest);
 
         // 将 GPT 的回复加入对话历史
-        conversationHistory.add(Map.of("role", "assistant", "content", gptResponse));
+        Map<String, String> assistantMessage = new HashMap<>();
+        assistantMessage.put("role", "assistant");
+        assistantMessage.put("content", gptResponse);
+
+        conversationHistory.add(assistantMessage);
 
         return gptResponse;
     }
