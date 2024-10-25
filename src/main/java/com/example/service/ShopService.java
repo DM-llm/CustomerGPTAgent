@@ -6,6 +6,7 @@ import com.example.model.BusShopWeeklyTaskLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
@@ -26,17 +27,22 @@ public class ShopService {
         int currentWeek = LocalDate.now().get(WeekFields.of(Locale.getDefault()).weekOfYear());
 
         for (BusShop shop : shopList) {
+            // 确保该店铺数据在本周有更新
             if (!isUpdatedThisWeek(shop.getUpdateTime())) {
                 continue;
             }
 
+            // 检查是否已有记录，不存在则插入新记录
             int exists = shopMapper.checkWeeklyTaskLogExists(shop.getTenantId(), currentWeek);
             if (exists == 0) {
                 shopMapper.insertWeeklyTaskLog(shop.getTenantId(), currentWeek, 0, 0, 0);
+                System.out.println("新增任务记录：租户ID = " + shop.getTenantId() + ", 周数 = " + currentWeek);
             }
 
+            // 获取最新的任务日志记录
             BusShopWeeklyTaskLog taskLog = shopMapper.findWeeklyTaskLog(shop.getTenantId(), currentWeek);
 
+            // 如果任务未完成，则执行一次下单逻辑并更新任务记录
             if (!isTaskComplete(taskLog, shop)) {
                 performAutoOrder(shop);
 
@@ -46,8 +52,7 @@ public class ShopService {
                         taskLog.getVipgptqty() + 1,
                         taskLog.getOrderqty() + 1);
 
-                // 每次更新后重新查询 taskLog，获取最新数据
-                taskLog = shopMapper.findWeeklyTaskLog(shop.getTenantId(), currentWeek);
+                System.out.println("任务记录已更新：租户ID = " + shop.getTenantId() + ", 周数 = " + currentWeek);
             }
         }
     }
@@ -60,10 +65,16 @@ public class ShopService {
     }
 
     private boolean isUpdatedThisWeek(LocalDateTime updateTime) {
-        // 检查更新时间是否为本周
+        if (updateTime == null) {
+            return false;
+        }
+
         LocalDate today = LocalDate.now();
-        LocalDate startOfWeek = today.with(WeekFields.of(Locale.getDefault()).getFirstDayOfWeek());
-        return !updateTime.toLocalDate().isBefore(startOfWeek);
+        LocalDate startOfWeek = today.with(DayOfWeek.MONDAY);
+        LocalDate endOfWeek = today.with(DayOfWeek.SUNDAY);
+
+        LocalDate updateDate = updateTime.toLocalDate();
+        return !updateDate.isBefore(startOfWeek) && !updateDate.isAfter(endOfWeek);
     }
 
     private void performAutoOrder(BusShop shop) {

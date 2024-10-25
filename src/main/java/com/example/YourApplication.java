@@ -26,6 +26,8 @@ public class YourApplication implements CommandLineRunner {
 	@Autowired
 	private ShopService shopService;
 
+	@Autowired
+
 
 
 	public static void main(String[] args) {
@@ -44,6 +46,7 @@ public class YourApplication implements CommandLineRunner {
 		//gptAutoCommentService.handleAutoComment();
 
 		//虚拟浏览
+
 		shopService.processWeeklyTask();
 
 	}

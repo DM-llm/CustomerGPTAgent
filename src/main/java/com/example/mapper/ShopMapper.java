@@ -12,7 +12,7 @@ public interface ShopMapper {
     // 查询每周店铺数据
     List<BusShop> findWeeklyShopData();
 
-    // 插入冗余表
+    // 插入每周任务记录
     void insertWeeklyTaskLog(@Param("tenantId") int tenantId, @Param("weekNumber") int weekNumber,
                              @Param("gptqty") int gptqty, @Param("vipgptqty") int vipgptqty,
                              @Param("orderqty") int orderqty);
