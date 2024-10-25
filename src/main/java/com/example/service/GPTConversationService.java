@@ -22,6 +22,9 @@ public class GPTConversationService {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private ShopService shopService;
+
     // 用来保存整个对话的上下文（系统消息、GPT回复、用户输入）
     private List<Map<String, String>> conversationHistory = new ArrayList<>();
 
@@ -82,6 +85,12 @@ public class GPTConversationService {
         System.out.println("商家回复: " + merchantReply);
 
         System.out.println("对话结束。");
+        // 获取最后的商品信息
+        Product product = orderService.autoPlaceOrder();
+        if (product != null) {
+            // 将 product 对象传递到另一个服务类
+            ShopService.processProductDetails(product);
+        }
     }
 
     // 调用 GPT API 并返回 GPT 的回复

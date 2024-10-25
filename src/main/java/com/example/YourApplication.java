@@ -4,14 +4,17 @@ import com.example.service.GPTAutoCommentService;
 import com.example.service.GPTConversationService;
 import com.example.service.OrderService;
 import com.example.service.ShopService;
+import com.example.util.CustomTaskScheduler;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("com.example.mapper")
+@EnableScheduling
 public class YourApplication implements CommandLineRunner {
 
 	@Autowired
@@ -27,7 +30,7 @@ public class YourApplication implements CommandLineRunner {
 	private ShopService shopService;
 
 	@Autowired
-
+	private CustomTaskScheduler customTaskScheduler;
 
 
 	public static void main(String[] args) {
@@ -46,8 +49,7 @@ public class YourApplication implements CommandLineRunner {
 		//gptAutoCommentService.handleAutoComment();
 
 		//虚拟浏览
-
-		shopService.processWeeklyTask();
+		//shopService.processWeeklyTask();
 
 	}
 }

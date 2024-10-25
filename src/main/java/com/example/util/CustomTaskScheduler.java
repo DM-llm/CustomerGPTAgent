@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskScheduler {
+public class CustomTaskScheduler {
 
     @Autowired
     private ShopService shopService;
