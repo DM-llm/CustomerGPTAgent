@@ -1,12 +1,13 @@
 package com.example.service;
 
-
-import com.example.model.BusShop;
 import com.example.mapper.ShopMapper;
+import com.example.model.BusShop;
+import com.example.model.BusShopWeeklyTaskLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
@@ -25,40 +26,48 @@ public class ShopService {
         int currentWeek = LocalDate.now().get(WeekFields.of(Locale.getDefault()).weekOfYear());
 
         for (BusShop shop : shopList) {
-            // 记录每周任务执行情况到冗余表
-            shopMapper.insertWeeklyTaskLog(shop.getId(), currentWeek, shop.getGptqty(), shop.getVipgptqty(), shop.getOrderqty());
+            if (!isUpdatedThisWeek(shop.getUpdateTime())) {
+                continue;
+            }
 
-            // 动态计算阈值
-            int gptThreshold = calculateGptThreshold(shop);
-            int vipThreshold = calculateVipGptThreshold(shop);
-            int orderThreshold = calculateOrderThreshold(shop);
+            int exists = shopMapper.checkWeeklyTaskLogExists(shop.getTenantId(), currentWeek);
+            if (exists == 0) {
+                shopMapper.insertWeeklyTaskLog(shop.getTenantId(), currentWeek, 0, 0, 0);
+            }
 
-            // 检查是否有任何字段未达标
-            int thresholdMet = shopMapper.checkThresholdMet(shop.getId(), gptThreshold, vipThreshold, orderThreshold);
+            BusShopWeeklyTaskLog taskLog = shopMapper.findWeeklyTaskLog(shop.getTenantId(), currentWeek);
 
-            // 如果没有达标，则执行自动下单
-            if (thresholdMet > 0) {
+            if (!isTaskComplete(taskLog, shop)) {
                 performAutoOrder(shop);
-                shopMapper.updateBrowseCount(shop.getId());
-                shopMapper.updateTaskCompleteStatus(shop.getId(), currentWeek);
+
+                // 更新任务记录
+                shopMapper.updateTaskLog(shop.getTenantId(), currentWeek,
+                        taskLog.getGptqty() + 1,
+                        taskLog.getVipgptqty() + 1,
+                        taskLog.getOrderqty() + 1);
+
+                // 每次更新后重新查询 taskLog，获取最新数据
+                taskLog = shopMapper.findWeeklyTaskLog(shop.getTenantId(), currentWeek);
             }
         }
     }
 
-    private int calculateGptThreshold(BusShop shop) {
-        return shop.getOrderqty() * 10;  // 示例：根据订单量动态调整 gpt 阈值
+    private boolean isTaskComplete(BusShopWeeklyTaskLog taskLog, BusShop shop) {
+        // 检查任务是否达成要求
+        return taskLog.getGptqty() >= shop.getGptqty() &&
+                taskLog.getVipgptqty() >= shop.getVipgptqty() &&
+                taskLog.getOrderqty() >= shop.getOrderqty();
     }
 
-    private int calculateVipGptThreshold(BusShop shop) {
-        return shop.getOrderqty() * 5;  // 示例：根据订单量动态调整 VIP gpt 阈值
-    }
-
-    private int calculateOrderThreshold(BusShop shop) {
-        return 100;  // 示例：订单阈值为 100
+    private boolean isUpdatedThisWeek(LocalDateTime updateTime) {
+        // 检查更新时间是否为本周
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(WeekFields.of(Locale.getDefault()).getFirstDayOfWeek());
+        return !updateTime.toLocalDate().isBefore(startOfWeek);
     }
 
     private void performAutoOrder(BusShop shop) {
-        // 执行自动下单的逻辑
-        // ...
+        // 执行自动下单逻辑
+        System.out.println("执行自动下单，租户ID：" + shop.getTenantId());
     }
 }

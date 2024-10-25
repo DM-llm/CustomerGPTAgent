@@ -1,31 +1,27 @@
 package com.example.model;
 
-import java.time.LocalDateTime;
-
 public class BusShopWeeklyTaskLog {
-    private int id;
-    private int shopId;
+
+    private int tenantId;
     private int gptqty;
     private int vipgptqty;
     private int orderqty;
-    private LocalDateTime createTime;
 
-    // Getters and Setters
-
-    public int getId() {
-        return id;
+    // 添加构造函数
+    public BusShopWeeklyTaskLog(int tenantId, int gptqty, int vipgptqty, int orderqty) {
+        this.tenantId = tenantId;
+        this.gptqty = gptqty;
+        this.vipgptqty = vipgptqty;
+        this.orderqty = orderqty;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    // Getter 和 Setter 方法
+    public int getTenantId() {
+        return tenantId;
     }
 
-    public int getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(int shopId) {
-        this.shopId = shopId;
+    public void setTenantId(int tenantId) {
+        this.tenantId = tenantId;
     }
 
     public int getGptqty() {
@@ -50,13 +46,5 @@ public class BusShopWeeklyTaskLog {
 
     public void setOrderqty(int orderqty) {
         this.orderqty = orderqty;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
     }
 }

@@ -1,20 +1,22 @@
 package com.example.model;
 
+import java.time.LocalDateTime;
 
 public class BusShop {
-    private int id;
+    private int tenantId;
     private int gptqty;
     private int vipgptqty;
     private int orderqty;
+    private LocalDateTime updateTime;
 
     // Getters and Setters
 
-    public int getId() {
-        return id;
+    public int getTenantId() {
+        return tenantId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTenantId(int tenantId) {
+        this.tenantId = tenantId;
     }
 
     public int getGptqty() {
@@ -39,5 +41,13 @@ public class BusShop {
 
     public void setOrderqty(int orderqty) {
         this.orderqty = orderqty;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 }
