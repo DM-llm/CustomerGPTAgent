@@ -49,7 +49,7 @@ public class YourApplication implements CommandLineRunner {
 		//gptAutoCommentService.handleAutoComment();
 
 		//虚拟浏览
-		//shopService.processWeeklyTask();
+		shopService.processWeeklyTask();
 
 	}
 }

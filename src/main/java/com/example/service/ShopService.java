@@ -84,6 +84,6 @@ public class ShopService {
     private void performAutoOrder(BusShop shop) {
         // 执行自动下单逻辑
         System.out.println("执行自动下单，租户ID：" + shop.getTenantId());
-        gptConversationService.handleConversation();
+        //gptConversationService.handleConversation();
     }
 }
